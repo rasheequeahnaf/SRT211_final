@@ -11,9 +11,6 @@
 #
 # Usage: ./<filename>.py
 
-
-# Defining dictionaries for services, additional options, and service tiers with their prices
-
 # Following keywords are universal throughout the whole code
 # Keywords have been shortened to avoid plagiarism
 
@@ -33,26 +30,23 @@
  # gd = grand
  # prmtr = parameter
  # ql = quality
+ # tmp = temporary
 
-gd_tl = 2000.00 # variable to store grand total
+# variables
+
+gd_tl = 0.00 # variable to store grand total
 tl_srvc = 0 # Total Services chosen
 booking_state = True # Starts as if the booking is going on and helps end the program when booking done
-phase = 1
+phase = 0
 ql_srvc = 3.47 # quality of service
 v_sz = 1.28 # vehicle size
 
-
-print (  " ---------------------------------")
-print (  "|        Phynix Auto Group        |")
-print (  "|                                 |")
-print (  "|  Welcome to our Booking system  |")
-print (  "|                                 |")
-print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
-print (  "|      | Established 1946 |       |")
-print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
-
+#temporary list to hold the services selected by customer
 #___________________________________#
 all_slt_srvc = []
+
+
+# Defining dictionaries for services, additional options, and service tiers with their prices
 
 #___________________________________#
 dt_choices = {"Primary Services":None, "Additional Services":None, "Quality of Service":None, "Choose Your Vehicle Size":None, "Checkout!":None}
@@ -78,6 +72,18 @@ dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
     "Sedan": 1.00, "Mid-Size Sedan": 1.13, "Hatchback": 1.20,
     "Small SUV": 1.28, "Mid-Size SUV": 1.37, "Large SUV": 1.49,
     "Truck": 2.36, "Tow Truck": 3.99, "Small Bus": 4.78, "Large Bus": 7.45}
+
+##################_Function_##################
+
+def wlc_msg():
+    print (  " ---------------------------------")
+    print (  "|        Phynix Auto Group        |")
+    print (  "|                                 |")
+    print (  "|  Welcome to our Booking system  |")
+    print (  "|                                 |")
+    print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
+    print (  "|      | Established 1946 |       |")
+    print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
 
 ##################_Function_##################
 
@@ -122,11 +128,11 @@ def pr_mn(prmtr): # pr = print , mn = menu
 
 def choice(prmtr):
     
-    choice = 0
+    tmp_var = 0
     
-    while int(choice) <= 0 or int(choice) >= len(prmtr):
+    while int(tmp_var) <= 0 or int(tmp_var) >= len(prmtr):
         
-        choice = input("\n  What option? Ans: ")
+        tmp_var = input("\n  What option? Ans: ")
     
 ##################_Function_##################
  
@@ -136,9 +142,9 @@ def slt_srvc(param1, param2): # selected service price will be fetched and recor
     
     all_slt_srvc.append(gkbi(param2, param1-1))
     
-    val = float(gvbi(param2, param1-1))
+    tmp_var = float(gvbi(param2, param1-1))
     
-    rec_tl_prc(val)
+    rec_tl_prc(tmp_var)
 
 ##################_Function_##################
  
@@ -155,32 +161,41 @@ def rec_tl_prc(var): # Adding total price as we move forward
 def checkout():
     global phase, booking_state
     
-    ret_var = "" # str variable used for returning keys as an string output of selected dictionary
+    ret_var = "" # str variable used for returning keys as a string output of selected dictionary
     
+    tmp_var = input("\n  Would you like to book more services? Ans [Y/N]: ")
     
-    
-    # print(f"Vehicle size key that matches value {v_sz}: {tmp_var1}")
-    tmp_var = input("Would you like to book more services? Ans [Y/N]: ")
-    
-    if tmp_var == "Y" or "y":
+    if tmp_var == "Y" or tmp_var == "y":
+        
         phase = 0
+        
         booking_state = True
-    else:
+        
+    elif tmp_var == "N" or tmp_var == "n":
+        
         booking_state = False
+        
         Final_Output()
-        exit
+        exit()
     
     return ret_var
- 
- 
+
 ##################_Function_##################
 
 def Final_Output():
+    
+    ret_var = "" # str variable used for returning keys as a string output of selected dictionary
     
     tmp_var1 = fkbv(dt_vhcl_sz, v_sz)
     tmp_var2 = fkbv(dt_quality, ql_srvc)
     tmp_var3 = gd_tl * v_sz * ql_srvc
     
+    for p in all_slt_srvc:
+        ret_var+="\n  "+p
+        
+        
+    print ("\n  You have selected the following services")
+    print (ret_var)
     print (f"\n  Total Cost of '{tmp_var2}' quality service(s) for your '{tmp_var1}' will be: '{tmp_var3:.2f}'")
     
 ##################_Function_##################
@@ -199,10 +214,9 @@ def isInt(prmtr):
 
 if __name__ == "__main__":
     
+    wlc_msg()
     
     tmp_var = None
-    
-    Final_Output()
     
     while booking_state != False:
         if phase == 0:
@@ -218,8 +232,7 @@ if __name__ == "__main__":
         elif phase == 5:
             checkout()
         
-        # if phase >= 0 or phase <= 4:
-        #     pr_mn(tmp_var)
-        
-    # if phase >= 0 or phase <= 4:
-    #     pr_mn(tmp_var)
+        if phase >= 0 or phase <= 4:
+            pr_mn(tmp_var)
+    
+    
