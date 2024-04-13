@@ -38,7 +38,7 @@ gd_tl = 0.00 # variable to store grand total
 tl_srvc = 0 # Total Services chosen
 booking_state = True # Starts as if the booking is going on and helps end the program when booking done
 phase = 1
-ql = 1.00 # quality of service
+ql_srvc = 1.00 # quality of service
 v_sz = 1.00 # vehicle size
 
 
@@ -68,7 +68,7 @@ dt_ext = { # dt = dictionary , ext = extras
     "Engine Check": 340.00, "Tow Hitch installation": 1200.00, "Camping extras for Summer": 3795.00}
 
 #___________________________________#
-dt_quality = {"Basic": 0.00, "Standard": 1.38, "Premium": 3.47 } # dt = dictionary 
+dt_quality = {"Basic": 1.00, "Standard": 1.38, "Premium": 3.47 } # dt = dictionary 
 
 #___________________________________#
 dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
@@ -76,6 +76,13 @@ dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
     "Small SUV": 1.28, "Mid-Size SUV": 1.37, "Large SUV": 1.49,
     "Truck": 2.36, "Tow Truck": 3.99, "Small Bus": 4.78, "Large Bus": 7.45}
 
+##################_Function_##################
+
+def fkbv(prmtr1, prmtr2):
+    for k, v in prmtr1.items():
+        if v == prmtr2:
+            return k
+    return "" 
 
 ##################_Function_##################
  
@@ -84,17 +91,8 @@ def pr_mn(prmtr): # pr = print , mn = menu
     ret_var += "\n  Total items in Cart: " + str(tl_srvc)
     ret_var += "\n  Total price: " + str(gd_tl)
     ret_var += "\n  Please select from the Following\n"
-    ret_var += "\n  Note: Select your vehicle size and desired quality of service\n"
-    
-    # print(ret_var)
-    
-    # count = 1
-    
-    # for i in range(len(prmtr)):
-    #     # count = len(prmtr)
-        
-    #     ret_var += "\n" + str(count) + "  " + list(prmtr.keys())[int(i)]
-    #     count += 1
+    ret_var += "\n  Note: Select your vehicle size and desired quality of service"
+    ret_var += "\n  Default vehicle size is Sedan and quality of service is Basic\n"
     
     count = 1
     for key in prmtr.keys():
@@ -122,10 +120,21 @@ def rec_tl_prc(var): # Adding total price as we move forward
 ##################_Function_##################
  
 def checkout():
+    global phase, booking_state
+    
     ret_var = "" # str variable used for returning keys as an string output of selected dictionary
     
-    print("Would you like to book more services?")
-    # input = 
+    
+    
+    # print(f"Vehicle size key that matches value {v_sz}: {tmp_var1}")
+    tmp_var = input("Would you like to book more services? Ans [Y/N]: ")
+    
+    if tmp_var == "Y" or "y":
+        phase = 0
+    else:
+        booking_state = False
+        Final_Output()
+        exit
     
     return ret_var
  
@@ -133,8 +142,11 @@ def checkout():
 ##################_Function_##################
 
 def Final_Output():
+    tmp_var1 = fkbv(dt_vhcl_sz, v_sz)
+    tmp_var2 = fkbv(dt_quality, ql_srvc)
     
-    exit
+    return f"\n  Total Cost of '{tmp_var2}' quality service(s)\n  for your '{tmp_var1}' will be: '{gd_tl}'"
+    
  
 ##################_Function_##################
 
@@ -142,8 +154,9 @@ def choice(prmtr):
     
     choice = 0
     while int(choice) <= 0 or int(choice) >= len(prmtr):
-        choice = input("\n  What option? Zero for main menu. Ans: ")
+        choice = input("\n  What option? Ans: ")
     
+##################_Function_##################
 
 def isInt(prmtr):
     try:
@@ -161,18 +174,22 @@ if __name__ == "__main__":
     
     tmp_var = None
     
-    if phase == 0:
-        tmp_var = dt_choices
-    elif phase == 1:
-        tmp_var = dt_srvc
-    elif phase == 2:
-        tmp_var = dt_ext
-    elif phase == 3:
-        tmp_var = dt_quality
-    elif phase == 4:
-        tmp_var = dt_vhcl_sz
-    elif phase == 5:
-        Final_Output()
+    while booking_state != False:
+        if phase == 0:
+            tmp_var = dt_choices
+        elif phase == 1:
+            tmp_var = dt_srvc
+        elif phase == 2:
+            tmp_var = dt_ext
+        elif phase == 3:
+            tmp_var = dt_quality
+        elif phase == 4:
+            tmp_var = dt_vhcl_sz
+        elif phase == 5:
+            checkout()
         
-    if phase >= 0 or phase <= 4:
-        pr_mn(tmp_var)
+        if phase >= 0 or phase <= 4:
+            pr_mn(tmp_var)
+        
+    # if phase >= 0 or phase <= 4:
+    #     pr_mn(tmp_var)
