@@ -35,11 +35,16 @@
 gd_tl = 0.0 # variable to store grand total
 tl_srvc = 0 # Total Services chosen
 booking_state = True # Starts as if the booking is going on and helps end the program when booking done
-print (  " _________________________________")
+print (  " ---------------------------------")
 print (  "|        Phynix Auto Group        |")
 print (  "|                                 |")
 print (  "|  Welcome to our Booking system  |")
 print (  "|                                 |")
+print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
+print (  "|      | Established 1946 |       |")
+print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
+
+l_choices = ["Primary Services", "Additional Services"]
 
 #___________________________________#
 dt_srvc = { # dt = dictionary , srvc = service
@@ -67,8 +72,9 @@ dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
 ##################_Function_##################
  
 def pr_mn(): # pr = print , mn = menu
-    ret_var = "" # str variable used for returning keys as an string output of selected dictionary
-    ret_var += ""
+    ret_var = "\n" # str variable used for returning keys as an string output of selected dictionary
+    ret_var += "Please select from the Following"
+    choice = input("")
     return ret_var
 
 ##################_Function_##################
