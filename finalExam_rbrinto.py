@@ -34,15 +34,15 @@
 
 # variables
 
-gd_tl = 0.00                        # variable to store grand total price for all items in cart                                                          => refer to line 
-tl_srvc = 0                         # Total Services chosen by the customer                                                                              => refer to line 
-booking_state = True                # Starts as if the booking is going on and helps end the program when booking done                                   => refer to line 
-phase = 0                           # Phase variable is a way for the program to understand which dictionary will be shown to the user for interaction   => refer to line 
+gd_tl = 0.00                        # variable to store grand total price for all items in cart                                                          => refer to line 246 to 250
+tl_srvc = 0                         # Total Services chosen by the customer                                                                              => refer to line 240
+booking_state = True                # Starts as if the booking is going on and helps end the program when booking done                                   => refer to line 315, 267,271
+phase = 0                           # Phase variable is a way for the program to understand which dictionary will be shown to the user for interaction   => refer to line 158
 ql_srvc = 1.00                      # quality of service is set to Basic by default unless user decides to change it                                     => refer to line 66
 v_sz = 1.00                         # vehicle size is set to Sedan by default unless changed by user                                                     => refer to line 69
 
-#___________________________________# # temporary list to hold the services selected by customer                                                         => refer to line 
-all_slt_srvc = []                   # this empty list will save the services chosen by customer until customer decides to checkout                       => refer to line 
+#___________________________________# # temporary list to hold the services selected by customer                                                         => refer to line None
+all_slt_srvc = []                   # this empty list will save the services chosen by customer until customer decides to checkout                       => refer to line 230, 293
 
 # Defining dictionaries for services, additional options, and service tiers with their prices
 
@@ -73,7 +73,7 @@ dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
 
 ##################_Function_################## 
 
-def wlc_msg():
+def wlc_msg(): # first function to be executed once only
     print (  "-----------------------------------") # this function is for decoration purposes only
     print (  "|        Phynix Auto Group        |")
     print (  "|                                 |")
@@ -116,7 +116,7 @@ def gkbi(prmtr1, prmtr2): # get key by index function
 def pr_mn(prmtr): # pr = print , mn = menu. This function prints menu items from dictionaries relative to customers navigation requirements
     ret_var = "\n"                                          # str variable used for returning strings and keys as an string output of selected dictionary
     ret_var += "\n  Total items in Cart: " + str(tl_srvc)   # ret_var = return variable
-    ret_var += "\n  Total price: " + str(gd_tl)
+    ret_var += "\n  Total price: $" + str(gd_tl)
     ret_var += "\n  Please select from the Following\n"
     ret_var += "\n  Note: Select your vehicle size and desired quality of service"
     ret_var += "\n  Default vehicle size is Sedan and quality of service is Basic\n" # => refer to line 41, 42
@@ -140,7 +140,7 @@ def choice(prmtr):
     
     tmp_var1 = None         # initiate empty variable
     
-                            # Validate user input
+                            # Validate user input and make sure None is not returned avoiding program crash
     while tmp_var1 is None:
         
         tmp_var1 = input("\n  What option? Ans: ") # taking user input.
@@ -175,7 +175,7 @@ def choice(prmtr):
         slt_srvc(tmp_var2, prmtr)   
         phase = 0               # => refer to line 158
 
-    return tmp_var2
+    return tmp_var2 # returning regradless of any other conditions
     
 ##################_Function_##################
 
@@ -213,10 +213,10 @@ def set_ql_srvc(): # this function store quality of service  => refer to line 18
         print("\n  Invalid input - Try Again")
         # Prompt the user again if the choice is invalid
         
-        set_ql_srvc()
+        set_ql_srvc() # setting service quality
     
     # Reset the phase to 0 in either case (whether choice was valid or invalid)
-    phase = 0
+    phase = 0  # => refer to line 158
 
 
 ##################_Function_##################
@@ -227,19 +227,19 @@ def slt_srvc(prmtr1, prmtr2): # selected service price will be fetched and recor
     
     tmp_var = gkbi(prmtr2, prmtr1-1) # using get keys by index from user desired input to store selected service in the temporary list in line 45
     
-    all_slt_srvc.append(tmp_var)
+    all_slt_srvc.append(tmp_var) # appending every service selected by user
     
-    tmp_var2 = float(gvbi(prmtr2, prmtr1-1))
+    tmp_var2 = float(gvbi(prmtr2, prmtr1-1)) # getting the price of the service
     
-    rec_tl_prc(tmp_var2)
+    rec_tl_prc(tmp_var2) # adding price to show in final_output() # => refer to line 232, 37, 288
     
+    print( "|===================================================================================") # decoration
+    print(f"|=> You have added '{tmp_var}' service to your cart successfully! <=") # showing success message after every addition
     print( "|===================================================================================")
-    print(f"|=> You have added '{tmp_var}' service to your cart successfully! <=")
-    print( "|===================================================================================")
     
-    tl_srvc += 1
+    tl_srvc += 1 # updating cart count => refer to line 38
     
-    phase = 0
+    phase = 0 # => refer to line 158
 
 ##################_Function_##################
  
@@ -247,76 +247,74 @@ def rec_tl_prc(var): # Adding total price as we move forward
     
     global gd_tl
     
-    gd_tl += var
+    gd_tl += var # grand total => refer to line 37
  
 ##################_Function_##################
  
-def checkout():
+def checkout(): # this function helps the user checkout
     global phase, booking_state
     
-    print(        "\n|---------------------------------------------------->|")
+    print(        "\n|---------------------------------------------------->|") # decoration
     
-    tmp_var = input("| Would you like to book more services? Ans [Y/N]: ")
+    tmp_var = input("| Would you like to book more services? Ans [Y/N]: ") # asking for final decision
     
     print(          "|---------------------------------------------------->|")
     
     if tmp_var == "Y" or tmp_var == "y":
         
-        phase = 0
+        phase = 0 # if user wants to do more shopping then phase resets to zero and same as # => refer to line 158
         
-        booking_state = True
+        booking_state = True # booking stays true to continue while loop in __main__ # => refer to line 39, 315, 271
         
     elif tmp_var == "N" or tmp_var == "n":
         
-        booking_state = False
+        booking_state = False # changing this breaks the while loop and proceeds to final output # => refer to line 39, 315, 267
         
         Final_Output()
-        print(      "  ___________________________________________________________________________")
+        print(      "  ___________________________________________________________________________") # decoration
         
-        exit()
+        exit() # ends program
     
-    return ""
+    return "" # nothing
 
 ##################_Function_##################
 
-def Final_Output():
+def Final_Output(): # last funtion to be executed once only
     
     ret_var = "" # str variable used for returning keys as a string output of selected dictionary
     
-    tmp_var1 = fkbv(dt_vhcl_sz, v_sz)
-    tmp_var2 = fkbv(dt_quality, ql_srvc)
-    tmp_var3 = gd_tl * v_sz * ql_srvc
+    tmp_var1 = fkbv(dt_vhcl_sz, v_sz)    # fetch key by value being used to get vehicle size
+    tmp_var2 = fkbv(dt_quality, ql_srvc) # same as previous line
+    tmp_var3 = gd_tl * v_sz * ql_srvc    # calculating the final output using =  vehicle size * quality of service * (total sum of all services selected in cart)
     
-    decor = 0
-    for p in all_slt_srvc:
+    decor = 0 # variable for decoration
+    for p in all_slt_srvc: # getting list of services in cart from temporary list
         
-        if decor == len(all_slt_srvc) -1:
+        if decor == len(all_slt_srvc) -1: # this if-else condition is for decoration purposes only.
             ret_var+="| "+p
         else:
             ret_var+="| "+p+"\n"
         decor += 1    
         
-    
-        
     print ("\n  You have selected the following services")
     print ("\n|=================================|")
-    print (ret_var)
+    print (ret_var) # printing final output
     print ("|=================================|")
     print (f"\n  Total Cost of {tmp_var2} quality service(s) for your {tmp_var1} will be: ${tmp_var3:.2f}")
+    # using :.2f to limit 2 digits after decimal
+    # prinitng all purchase information at the end
     
-##################_Function_##################
-
 ##################_Function_##################
 
 if __name__ == "__main__":
     
-    tmp_var = None
+    tmp_var = None # initialize temp variable
     
-    wlc_msg()
+    wlc_msg() # welcome message
     
-    while booking_state != False:
+    while booking_state != False: # while keeps running until booking state changes to False in checkout() function
         
-        if phase == 0:
+        if phase == 0: # these if else statements help understand which phase uses which dictionary for proper user menu screen output
             tmp_var = dt_choices
         elif phase == 1:
             tmp_var = dt_srvc
@@ -326,10 +324,10 @@ if __name__ == "__main__":
             tmp_var = dt_quality
         elif phase == 4:
             tmp_var = dt_vhcl_sz
-        elif phase == 5:
+        elif phase == 5: # when cutomer chooses to finish shopping, 5 is returned from line 173 and transaction is closed
             checkout()
         
-        if phase >= 0 or phase <= 4:
+        if phase >= 0 or phase <= 4: # if no 5 is returned, user continues to see the menus unless otherwise
         
             choice(tmp_var)
         
