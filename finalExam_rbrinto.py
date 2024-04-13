@@ -32,11 +32,15 @@
  # rec = record
  # gd = grand
  # prmtr = parameter
+ # ql = quality
 
-gd_tl = 0.0 # variable to store grand total
+gd_tl = 0.00 # variable to store grand total
 tl_srvc = 0 # Total Services chosen
 booking_state = True # Starts as if the booking is going on and helps end the program when booking done
-phase = 0
+phase = 1
+ql = 1.00 # quality of service
+v_sz = 1.00 # vehicle size
+
 
 print (  " ---------------------------------")
 print (  "|        Phynix Auto Group        |")
@@ -48,7 +52,7 @@ print (  "|      | Established 1946 |       |")
 print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
 
 #___________________________________#
-l_choices = ["Primary Services", "Additional Services", "Checkout!"]
+dt_choices = {"Primary Services":None, "Additional Services":None, "Quality of Service":None, "Choose Your Vehicle Size":None, "Checkout!":None}
 
 #___________________________________#
 dt_srvc = { # dt = dictionary , srvc = service
@@ -79,19 +83,25 @@ def pr_mn(prmtr): # pr = print , mn = menu
     ret_var = "\n" # str variable used for returning keys as an string output of selected dictionary
     ret_var += "\n  Total items in Cart: " + str(tl_srvc)
     ret_var += "\n  Total price: " + str(gd_tl)
-    ret_var += "\n\n  Please select from the Following\n"
+    ret_var += "\n  Please select from the Following\n"
+    ret_var += "\n  Note: Select your vehicle size and desired quality of service\n"
     
     # print(ret_var)
     
-    count = 1
+    # count = 1
     
-    for i in prmtr:
-        # count = len(prmtr)
+    # for i in range(len(prmtr)):
+    #     # count = len(prmtr)
         
-        ret_var += "\n" + str(count) + "  " + i
+    #     ret_var += "\n" + str(count) + "  " + list(prmtr.keys())[int(i)]
+    #     count += 1
+    
+    count = 1
+    for key in prmtr.keys():
+        ret_var += "\n" + str(count) + "  " + str(key)
+        count += 1
     
     print (ret_var)
-    
     choice(prmtr)
     
 
@@ -132,19 +142,27 @@ def choice(prmtr):
     
     choice = 0
     while int(choice) <= 0 or int(choice) >= len(prmtr):
-        choice = input("\n  What option? Ans: ")
-        
-pass
+        choice = input("\n  What option? Zero for main menu. Ans: ")
+    
+
+def isInt(prmtr):
+    try:
+        # Attempt to convert the string to an integer
+        int(prmtr)
+        # If successful, return True
+        return True
+    except ValueError:
+        # If a ValueError occurs, return False
+        return False
 
 ##################_Function_##################
 
-
 if __name__ == "__main__":
     
-    tmp_var = {}
+    tmp_var = None
     
     if phase == 0:
-        tmp_var = l_choices
+        tmp_var = dt_choices
     elif phase == 1:
         tmp_var = dt_srvc
     elif phase == 2:
@@ -156,5 +174,5 @@ if __name__ == "__main__":
     elif phase == 5:
         Final_Output()
         
-    if phase <= 0 or phase >= 4:
+    if phase >= 0 or phase <= 4:
         pr_mn(tmp_var)
