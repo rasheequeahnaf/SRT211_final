@@ -34,12 +34,12 @@
  # prmtr = parameter
  # ql = quality
 
-gd_tl = 0.00 # variable to store grand total
+gd_tl = 2000.00 # variable to store grand total
 tl_srvc = 0 # Total Services chosen
 booking_state = True # Starts as if the booking is going on and helps end the program when booking done
 phase = 1
-ql_srvc = 1.00 # quality of service
-v_sz = 1.00 # vehicle size
+ql_srvc = 3.47 # quality of service
+v_sz = 1.28 # vehicle size
 
 
 print (  " ---------------------------------")
@@ -50,6 +50,9 @@ print (  "|                                 |")
 print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
 print (  "|      | Established 1946 |       |")
 print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
+
+#___________________________________#
+all_slt_srvc = []
 
 #___________________________________#
 dt_choices = {"Primary Services":None, "Additional Services":None, "Quality of Service":None, "Choose Your Vehicle Size":None, "Checkout!":None}
@@ -84,10 +87,18 @@ def fkbv(prmtr1, prmtr2): # fetch key by value function
             return k
     return "" 
 
+##################_Function_##################
+ 
 def gvbi(param1, param2): # get values by index function
     # This function is a helper function. it is not needed but provided for better classification of code
     tmp_var = list(param1.values())
     return tmp_var[param2]
+
+##################_Function_##################
+ 
+def gkbi(param1, param2): # get key by index
+    keys_list = list(param1.keys())
+    return str(keys_list[param2])
 
 ##################_Function_##################
  
@@ -112,23 +123,31 @@ def pr_mn(prmtr): # pr = print , mn = menu
 def choice(prmtr):
     
     choice = 0
+    
     while int(choice) <= 0 or int(choice) >= len(prmtr):
+        
         choice = input("\n  What option? Ans: ")
     
-
 ##################_Function_##################
  
-def slt_srvc(param1, param2):
+def slt_srvc(param1, param2): # selected service price will be fetched and recorded
+    
+    global all_slt_srvc
+    
+    all_slt_srvc.append(gkbi(param2, param1-1))
     
     val = float(gvbi(param2, param1-1))
+    
     rec_tl_prc(val)
-    # return val
 
 ##################_Function_##################
  
 def rec_tl_prc(var): # Adding total price as we move forward
+    
     global gd_tl
+    
     gd_tl += var
+    
     pass # Nothing is returned
  
 ##################_Function_##################
@@ -145,6 +164,7 @@ def checkout():
     
     if tmp_var == "Y" or "y":
         phase = 0
+        booking_state = True
     else:
         booking_state = False
         Final_Output()
@@ -156,13 +176,13 @@ def checkout():
 ##################_Function_##################
 
 def Final_Output():
+    
     tmp_var1 = fkbv(dt_vhcl_sz, v_sz)
     tmp_var2 = fkbv(dt_quality, ql_srvc)
+    tmp_var3 = gd_tl * v_sz * ql_srvc
     
-    return f"\n  Total Cost of '{tmp_var2}' quality service(s)\n  for your '{tmp_var1}' will be: '{gd_tl}'"
+    print (f"\n  Total Cost of '{tmp_var2}' quality service(s) for your '{tmp_var1}' will be: '{tmp_var3:.2f}'")
     
- 
-
 ##################_Function_##################
 
 def isInt(prmtr):
@@ -179,7 +199,10 @@ def isInt(prmtr):
 
 if __name__ == "__main__":
     
+    
     tmp_var = None
+    
+    Final_Output()
     
     while booking_state != False:
         if phase == 0:
@@ -195,8 +218,8 @@ if __name__ == "__main__":
         elif phase == 5:
             checkout()
         
-        if phase >= 0 or phase <= 4:
-            pr_mn(tmp_var)
+        # if phase >= 0 or phase <= 4:
+        #     pr_mn(tmp_var)
         
     # if phase >= 0 or phase <= 4:
     #     pr_mn(tmp_var)
