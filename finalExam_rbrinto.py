@@ -27,10 +27,13 @@ dt_ext = { # dt = dictionary , ext = extras
 
 dt_quality = {"Basic": 0.00, "Standard": 15.00, "Premium": 30.00 } # dt = dictionary 
 
-dt_vhcl_sz = {
+dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
     "Sedan": 1.00, "Mid-Size Sedan": 1.13, "Hatchback": 1.20,
     "Small SUV": 1.28, "Mid-Size SUV": 1.37, "Large SUV": 1.49,
     "Truck": 2.36, "Tow Truck": 3.99, "Small Bus": 4.78, "Large Bus": 7.45}
 
 
-
+def print_menu():
+    ret_var = "" # variable used for returning
+    
+    return ret_var
