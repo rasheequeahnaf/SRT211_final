@@ -78,11 +78,16 @@ dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
 
 ##################_Function_##################
 
-def fkbv(prmtr1, prmtr2):
+def fkbv(prmtr1, prmtr2): # fetch key by value function
     for k, v in prmtr1.items():
         if v == prmtr2:
             return k
     return "" 
+
+def gvbi(param1, param2): # get values by index function
+    # This function is a helper function. it is not needed but provided for better classification of code
+    tmp_var = list(param1.values())
+    return tmp_var[param2]
 
 ##################_Function_##################
  
@@ -102,13 +107,22 @@ def pr_mn(prmtr): # pr = print , mn = menu
     print (ret_var)
     choice(prmtr)
     
+##################_Function_##################
+
+def choice(prmtr):
+    
+    choice = 0
+    while int(choice) <= 0 or int(choice) >= len(prmtr):
+        choice = input("\n  What option? Ans: ")
+    
 
 ##################_Function_##################
  
-def slt_srvc():
-    ret_var = 0.0 # float variable used for returning price of the selected item
+def slt_srvc(param1, param2):
     
-    return ret_var
+    val = float(gvbi(param2, param1-1))
+    rec_tl_prc(val)
+    # return val
 
 ##################_Function_##################
  
@@ -148,14 +162,7 @@ def Final_Output():
     return f"\n  Total Cost of '{tmp_var2}' quality service(s)\n  for your '{tmp_var1}' will be: '{gd_tl}'"
     
  
-##################_Function_##################
 
-def choice(prmtr):
-    
-    choice = 0
-    while int(choice) <= 0 or int(choice) >= len(prmtr):
-        choice = input("\n  What option? Ans: ")
-    
 ##################_Function_##################
 
 def isInt(prmtr):
