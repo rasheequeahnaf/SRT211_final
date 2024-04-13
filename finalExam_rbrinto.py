@@ -34,49 +34,47 @@
 
 # variables
 
-gd_tl = 0.00 # variable to store grand total
-tl_srvc = 0 # Total Services chosen
-booking_state = True # Starts as if the booking is going on and helps end the program when booking done
-phase = 0
-ql_srvc = 1.00 # quality of service
-v_sz = 1.00 # vehicle size
+gd_tl = 0.00                        # variable to store grand total price for all items in cart                                                          => refer to line 
+tl_srvc = 0                         # Total Services chosen by the customer                                                                              => refer to line 
+booking_state = True                # Starts as if the booking is going on and helps end the program when booking done                                   => refer to line 
+phase = 0                           # Phase variable is a way for the program to understand which dictionary will be shown to the user for interaction   => refer to line 
+ql_srvc = 1.00                      # quality of service is set to Basic by default unless user decides to change it                                     => refer to line 66
+v_sz = 1.00                         # vehicle size is set to Sedan by default unless changed by user                                                     => refer to line 69
 
-#temporary list to hold the services selected by customer
-#___________________________________#
-all_slt_srvc = []
-
+#___________________________________# # temporary list to hold the services selected by customer                                                         => refer to line 
+all_slt_srvc = []                   # this empty list will save the services chosen by customer until customer decides to checkout                       => refer to line 
 
 # Defining dictionaries for services, additional options, and service tiers with their prices
 
-#___________________________________#
+#___________________________________# this dictionary holds the first choice list shown to customers. 'None' type values has been used to prevent misuse of the code making it harder to modify
 dt_choices = {"Primary Services":None, "Additional Services":None, "Quality of Service":None, "Choose Your Vehicle Size":None, "Checkout!":None}
 
-#___________________________________#
+#___________________________________# this dictionary holds the primary servicing options as keys with their prices as values
 dt_srvc = { # dt = dictionary , srvc = service
     "Oil Change": 70.00,  "Tire Rotation": 60.00,  "Brake Inspection": 40.00, 
     "Engine Tuning": 300.00, "Top-up Fluids": 20.00, "Allignment": 120.00,
     "Winter Tire Change": 75.00, "Body damage repair": 3200.00, "Insurance Claim++": 300.00,
     "Warranty Renewal": 335.00, "Vehicle Safety": 100.00, "General inspection": 135.00 }
 
-#___________________________________#
+#___________________________________# this dictionary holds additional services in same formation as dt_service                                         => refer to line 52
 dt_ext = { # dt = dictionary , ext = extras
     "Car Wash": 20.00, "Interior Detailing": 30.00, "Engine bay Wash": 25.00, "Window Tint": 200.00,
     "Paint Protection": 2859.00, "Vehicle vinyl wrapping": 7800.00, "Paint Correction" : 400.00, 
     "Engine Check": 340.00, "Tow Hitch installation": 1200.00, "Camping extras for Summer": 3795.00}
 
-#___________________________________#
-dt_quality = {"Basic": 1.00, "Standard": 1.38, "Premium": 3.47 } # dt = dictionary 
+#___________________________________# this dictionary holds quality of service and values are the multiplication factors. 
+dt_quality = {"Basic": 1.00, "Standard": 1.38, "Premium": 3.47 } # if some one choses basic, price will remain normal. if they choose premium, price will increase 3.47 times
 
-#___________________________________#
-dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
+#___________________________________# this dictionary holds the size of cars customers have. the same logic is used as dt_quality. higher values increase prices
+dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size 
     "Sedan": 1.00, "Mid-Size Sedan": 1.13, "Hatchback": 1.20,
     "Small SUV": 1.28, "Mid-Size SUV": 1.37, "Large SUV": 1.49,
     "Truck": 2.36, "Tow Truck": 3.99, "Small Bus": 4.78, "Large Bus": 7.45}
 
-##################_Function_##################
+##################_Function_################## 
 
 def wlc_msg():
-    print (  "-----------------------------------")
+    print (  "-----------------------------------") # this function is for decoration purposes only
     print (  "|        Phynix Auto Group        |")
     print (  "|                                 |")
     print (  "|  Welcome to our Booking system  |")
@@ -87,23 +85,23 @@ def wlc_msg():
 
 ##################_Function_##################
 
-def fkbv(prmtr1, prmtr2): # fetch key by value function
+def fkbv(prmtr1, prmtr2): # fetch key by value function: This function will fetch the keys using the stored values in variables  => refer to line 41, 42
     
-    for k, v in prmtr1.items():
+    for k, v in prmtr1.items(): # checking and sorting the correct key using the stored value to show in final_output() => refer to line 
         
-        if v == prmtr2:
-            
+        if v == prmtr2: # iterating and checking
+                            
             return k
         
-    return "" 
+    return "" # avoiding 'None' output
 
 ##################_Function_##################
  
-def gvbi(prmtr1, prmtr2): # get values by index function ( dictionary, index int )
-    # This function is a helper function. it is not needed but provided for better classification of code
-    tmp_var = list(prmtr1.values())
+def gvbi(prmtr1, prmtr2): # get values by index function ( dictionary, index int. This function is a helper function. it is not needed but provided for better classification of code
     
-    return tmp_var[prmtr2]
+    tmp_var = list(prmtr1.values())  # tmp_var is standard variable name used in this python file for temporary variables. values are being saves in a list format then returned 
+    
+    return tmp_var[prmtr2] # returning according to positionin the temporary list
 
 ##################_Function_##################
  
