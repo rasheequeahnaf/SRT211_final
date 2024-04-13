@@ -31,6 +31,7 @@
  # tl = total
  # rec = record
  # gd = grand
+ # prmtr = parameter
 
 gd_tl = 0.0 # variable to store grand total
 tl_srvc = 0 # Total Services chosen
@@ -47,7 +48,7 @@ print (  "|      | Established 1946 |       |")
 print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
 
 #___________________________________#
-l_choices = ["1) Primary Services", "2) Additional Services"]
+l_choices = ["Primary Services", "Additional Services", "Checkout!"]
 
 #___________________________________#
 dt_srvc = { # dt = dictionary , srvc = service
@@ -74,7 +75,7 @@ dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
 
 ##################_Function_##################
  
-def pr_mn(): # pr = print , mn = menu
+def pr_mn(prmtr): # pr = print , mn = menu
     ret_var = "\n" # str variable used for returning keys as an string output of selected dictionary
     ret_var += "\n  Total items in Cart: " + str(tl_srvc)
     ret_var += "\n  Total price: " + str(gd_tl)
@@ -82,14 +83,14 @@ def pr_mn(): # pr = print , mn = menu
     
     # print(ret_var)
     
-    for i in l_choices:
-        
+    for i in prmtr:
+        count = len(prmtr)
         ret_var += "\n  " + i
-    
     
     print (ret_var)
     
-    choice = input("\n  What are you looking for? Ans: ")
+    choice(prmtr)
+    
 
 ##################_Function_##################
  
@@ -124,8 +125,33 @@ def Final_Output():
  
 ##################_Function_##################
 
+def choice(prmtr):
+    
+    choice 
+    while choice >= len(prmtr) or choice <= len(prmtr):
+        choice = input("\n  What option? Ans: ")
+    
+    pass
+
 ##################_Function_##################
 
 
 if __name__ == "__main__":
-    pr_mn()
+    
+    tmp_var = {}
+    
+    if phase == 0:
+        tmp_var = l_choices
+    elif phase == 1:
+        tmp_var = dt_srvc
+    elif phase == 2:
+        tmp_var = dt_ext
+    elif phase == 3:
+        tmp_var = dt_quality
+    elif phase == 4:
+        tmp_var = dt_vhcl_sz
+    elif phase == 5:
+        Final_Output()
+        
+    if phase <= 0 or phase >= 4:
+        pr_mn(tmp_var)
