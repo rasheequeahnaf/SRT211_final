@@ -99,35 +99,35 @@ def fkbv(prmtr1, prmtr2): # fetch key by value function: This function will fetc
  
 def gvbi(prmtr1, prmtr2): # get values by index function ( dictionary, index int. This function is a helper function. it is not needed but provided for better classification of code
     
-    tmp_var = list(prmtr1.values())  # tmp_var is standard variable name used in this python file for temporary variables. values are being saves in a list format then returned 
+    tmp_var = list(prmtr1.values())     # tmp_var is standard variable name used in this python file for temporary variables. values are being saves in a list format then returned 
     
-    return tmp_var[prmtr2] # returning according to positionin the temporary list
+    return tmp_var[prmtr2]              # returning according to positionin the temporary list
 
 ##################_Function_##################
  
-def gkbi(prmtr1, prmtr2): # get key by index
+def gkbi(prmtr1, prmtr2): # get key by index function
     
-    keys_list = list(prmtr1.keys())
+    keys_list = list(prmtr1.keys())     # similar to gvbi() => refer to line 100
     
-    return str(keys_list[prmtr2])
+    return str(keys_list[prmtr2])       # concatenation to avoid error while returning data from temporary list
 
 ##################_Function_##################
  
-def pr_mn(prmtr): # pr = print , mn = menu
-    ret_var = "\n" # str variable used for returning keys as an string output of selected dictionary
-    ret_var += "\n  Total items in Cart: " + str(tl_srvc)
+def pr_mn(prmtr): # pr = print , mn = menu. This function prints menu items from dictionaries relative to customers navigation requirements
+    ret_var = "\n"                                          # str variable used for returning strings and keys as an string output of selected dictionary
+    ret_var += "\n  Total items in Cart: " + str(tl_srvc)   # ret_var = return variable
     ret_var += "\n  Total price: " + str(gd_tl)
     ret_var += "\n  Please select from the Following\n"
     ret_var += "\n  Note: Select your vehicle size and desired quality of service"
-    ret_var += "\n  Default vehicle size is Sedan and quality of service is Basic\n"
+    ret_var += "\n  Default vehicle size is Sedan and quality of service is Basic\n" # => refer to line 41, 42
     
-    count = 1
+    count = 1 # counter for loop
     
     for key in prmtr.keys():
         
-        ret_var += "\n" + str(count) + "  " + str(key)
+        ret_var += "\n" + str(count) + "  " + str(key) # storing and printing the keys one by one using ret_vat 
         
-        count += 1
+        count += 1 # counter increment
     
     print (ret_var)
     
