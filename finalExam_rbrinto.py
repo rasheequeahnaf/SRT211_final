@@ -135,45 +135,12 @@ def pr_mn(prmtr): # pr = print , mn = menu
     
 ##################_Function_##################
 
-# def choice(prmtr):
-#     global phase
-    
-#     tmp_var1 = None
-    
-#     # Validate user input
-#     while not tmp_var1 or not (tmp_var1.isdigit() and 1 <= int(tmp_var1) <= len(prmtr)):
-#         tmp_var1 = input("\n  What option? Ans: ")
-    
-#     # Convert the validated input to an integer
-#     tmp_var2 = int(tmp_var1)
-    
-#     if phase == 0:
-#         if tmp_var2 == 1:
-#             phase = 1
-#         elif tmp_var2 == 2:
-#             phase = 2
-#         elif tmp_var2 == 3:
-#             phase = 3
-#         elif tmp_var2 == 4:
-#             phase = 4
-#         elif tmp_var2 == 5:
-#             return tmp_var2
-#     elif tmp_var2 == 3:
-#         set_ql_srvc()
-#         phase = 0
-#         return tmp_var2
-#     elif tmp_var2 == 4:
-#         print(phase) ##
-#         set_v_sz()
-#         phase = 0
-#         return tmp_var2
-
 def choice(prmtr):
     global phase
     
-    tmp_var1 = 0
-    
     pr_mn(prmtr)
+    
+    tmp_var1 = None
     
     # Validate user input
     while not tmp_var1 or not (tmp_var1.isdigit() and 1 <= int(tmp_var1) <= len(prmtr)):
@@ -190,28 +157,22 @@ def choice(prmtr):
             phase = 2
         elif tmp_var2 == 3:
             phase = 3
-            set_ql_srvc()  # Call set_ql_srvc when phase is 3
+            set_ql_srvc()  # Phase 3: set quality of service
+            phase = 0  # Reset phase
         elif tmp_var2 == 4:
             phase = 4
-            set_v_sz()  # Call set_v_sz when phase is 4
+            set_v_sz()  # Phase 4: set vehicle size
+            # phase = 0  # Reset phase
         elif tmp_var2 == 5:
             phase = 5
             return tmp_var2
+    elif phase in [1, 2]:
+        slt_srvc(tmp_var2, prmtr)
+        phase = 0  # Reset phase
 
-        
-        
-        
     # Set the phase based on the user input
     
 ##################_Function_##################
-
-# def set_v_sz():
-    
-#     global phase, v_sz
-    
-#     tmp_var = choice(dt_vhcl_sz)
-    
-#     v_sz = float(gvbi(dt_vhcl_sz, tmp_var))
 
 def set_v_sz():
     global v_sz, phase
@@ -224,18 +185,8 @@ def set_v_sz():
     
     # Reset the phase to 0
     phase = 0
-
-    
     
 ##################_Function_##################
-
-# def set_ql_srvc():
-    
-#     global phase, ql_srvc
-    
-#     tmp_var = choice(dt_quality)
-    
-#     ql_srvc = float(gvbi(dt_quality, tmp_var))
 
 def set_ql_srvc():
     global ql_srvc, phase
@@ -249,13 +200,11 @@ def set_ql_srvc():
     # Reset the phase to 0
     phase = 0
 
-    
-
 ##################_Function_##################
  
 def slt_srvc(prmtr1, prmtr2): # selected service price will be fetched and recorded
     
-    global all_slt_srvc, phase
+    global all_slt_srvc, phase, tl_srvc
     
     tmp_var = gkbi(prmtr2, prmtr1-1)
     
@@ -267,7 +216,11 @@ def slt_srvc(prmtr1, prmtr2): # selected service price will be fetched and recor
     
     print(f"You have added {tmp_var} service to cart successfully!")
     
+    tl_srvc += 1
+    
     phase = 0
+    
+    # return ""
 
 ##################_Function_##################
  
@@ -277,7 +230,7 @@ def rec_tl_prc(var): # Adding total price as we move forward
     
     gd_tl += var
     
-    pass # Nothing is returned
+    # return "" # Nothing is returned
  
 ##################_Function_##################
  
@@ -303,8 +256,6 @@ def checkout():
         Final_Output()
         print(      "  ___________________________________________________________________________")
         
-        print(v_sz)
-        print(ql_srvc)
         exit()
     
     return ""
