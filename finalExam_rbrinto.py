@@ -37,13 +37,13 @@
 gd_tl = 0.00 # variable to store grand total
 tl_srvc = 0 # Total Services chosen
 booking_state = True # Starts as if the booking is going on and helps end the program when booking done
-phase = 1
-ql_srvc = 3.47 # quality of service
-v_sz = 1.28 # vehicle size
+phase = 0
+ql_srvc = 1.00 # quality of service
+v_sz = 1.00 # vehicle size
 
 #temporary list to hold the services selected by customer
 #___________________________________#
-all_slt_srvc = []
+all_slt_srvc = [ "var1", "var2", "var3", "var4","var5", "var6","var7", "var8"]
 
 
 # Defining dictionaries for services, additional options, and service tiers with their prices
@@ -135,10 +135,43 @@ def pr_mn(prmtr): # pr = print , mn = menu
     
 ##################_Function_##################
 
+# def choice(prmtr):
+#     global phase
+    
+#     tmp_var1 = None
+    
+#     # Validate user input
+#     while not tmp_var1 or not (tmp_var1.isdigit() and 1 <= int(tmp_var1) <= len(prmtr)):
+#         tmp_var1 = input("\n  What option? Ans: ")
+    
+#     # Convert the validated input to an integer
+#     tmp_var2 = int(tmp_var1)
+    
+#     if phase == 0:
+#         if tmp_var2 == 1:
+#             phase = 1
+#         elif tmp_var2 == 2:
+#             phase = 2
+#         elif tmp_var2 == 3:
+#             phase = 3
+#         elif tmp_var2 == 4:
+#             phase = 4
+#         elif tmp_var2 == 5:
+#             return tmp_var2
+#     elif tmp_var2 == 3:
+#         set_ql_srvc()
+#         phase = 0
+#         return tmp_var2
+#     elif tmp_var2 == 4:
+#         print(phase) ##
+#         set_v_sz()
+#         phase = 0
+#         return tmp_var2
+
 def choice(prmtr):
     global phase
     
-    tmp_var1 = None
+    tmp_var1 = 0
     
     # Validate user input
     while not tmp_var1 or not (tmp_var1.isdigit() and 1 <= int(tmp_var1) <= len(prmtr)):
@@ -147,6 +180,7 @@ def choice(prmtr):
     # Convert the validated input to an integer
     tmp_var2 = int(tmp_var1)
     
+    # Check the current phase and execute the corresponding function
     if phase == 0:
         if tmp_var2 == 1:
             phase = 1
@@ -154,23 +188,66 @@ def choice(prmtr):
             phase = 2
         elif tmp_var2 == 3:
             phase = 3
+            set_ql_srvc()  # Call set_ql_srvc when phase is 3
         elif tmp_var2 == 4:
             phase = 4
+            set_v_sz()  # Call set_v_sz when phase is 4
         elif tmp_var2 == 5:
+            phase = 5
             return tmp_var2
+
+        
         
         
     # Set the phase based on the user input
     
-        
+##################_Function_##################
 
-def set_ql_srvc(prmtr, tmp_var):
+# def set_v_sz():
     
-    global phase, ql_srvc
+#     global phase, v_sz
     
+#     tmp_var = choice(dt_vhcl_sz)
+    
+#     v_sz = float(gvbi(dt_vhcl_sz, tmp_var))
+
+def set_v_sz():
+    global v_sz, phase
+    
+    # Perform the choice and set v_sz
+    tmp_var = int(choice(dt_vhcl_sz))
+    
+    # Update vehicle size using the selected index
+    v_sz = float(gvbi(dt_vhcl_sz, tmp_var - 1))
+    
+    # Reset the phase to 0
     phase = 0
+
     
-    ql_srvc = float(gvbi(prmtr, tmp_var))
+    
+##################_Function_##################
+
+# def set_ql_srvc():
+    
+#     global phase, ql_srvc
+    
+#     tmp_var = choice(dt_quality)
+    
+#     ql_srvc = float(gvbi(dt_quality, tmp_var))
+
+def set_ql_srvc():
+    global ql_srvc, phase
+    
+    # Perform the choice and set ql_srvc
+    tmp_var = int(choice(dt_quality))
+    
+    # Update quality of service using the selected index
+    ql_srvc = float(gvbi(dt_quality, tmp_var - 1))
+    
+    # Reset the phase to 0
+    phase = 0
+
+    
 
 ##################_Function_##################
  
@@ -199,9 +276,11 @@ def rec_tl_prc(var): # Adding total price as we move forward
 def checkout():
     global phase, booking_state
     
-    ret_var = "" # str variable used for returning keys as a string output of selected dictionary
+    print(          "\n  __________________________________________________")
     
     tmp_var = input("\n  Would you like to book more services? Ans [Y/N]: ")
+    
+    print(          "\n  --------------------------------------------------")
     
     if tmp_var == "Y" or tmp_var == "y":
         
@@ -214,9 +293,10 @@ def checkout():
         booking_state = False
         
         Final_Output()
+        print(      "\n  -------------------------------------------------------------------------")
         exit()
     
-    return ret_var
+    return ""
 
 ##################_Function_##################
 
@@ -228,12 +308,21 @@ def Final_Output():
     tmp_var2 = fkbv(dt_quality, ql_srvc)
     tmp_var3 = gd_tl * v_sz * ql_srvc
     
+    decor = 0
     for p in all_slt_srvc:
-        ret_var+="\n  "+p
         
+        if decor == len(all_slt_srvc) -1:
+            ret_var+="| "+p
+        else:
+            ret_var+="| "+p+"\n"
+        decor += 1    
+        
+    
         
     print ("\n  You have selected the following services")
+    print ("\n|=================================|")
     print (ret_var)
+    print ("|=================================|")
     print (f"\n  Total Cost of '{tmp_var2}' quality service(s) for your '{tmp_var1}' will be: '{tmp_var3:.2f}'")
     
 ##################_Function_##################
@@ -266,7 +355,6 @@ if __name__ == "__main__":
         
         choice(tmp_var)
         
-        print (phase)
         
         
     
