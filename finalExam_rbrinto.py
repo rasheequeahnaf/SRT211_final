@@ -24,11 +24,22 @@
  # mn = menu
  # slt = select
  # pr = print
+ # prc = price
  # vl = value
  # ret = return
  # var = variable
- #
+ # tl = total
+ # rec = record
+ # gd = grand
 
+gd_tl = 0.0 # variable to store grand total
+tl_srvc = 0 # Total Services chosen
+booking_state = True # Starts as if the booking is going on and helps end the program when booking done
+print (  " _________________________________")
+print (  "|        Phynix Auto Group        |")
+print (  "|                                 |")
+print (  "|  Welcome to our Booking system  |")
+print (  "|                                 |")
 
 #___________________________________#
 dt_srvc = { # dt = dictionary , srvc = service
@@ -57,7 +68,7 @@ dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
  
 def pr_mn(): # pr = print , mn = menu
     ret_var = "" # str variable used for returning keys as an string output of selected dictionary
-    
+    ret_var += ""
     return ret_var
 
 ##################_Function_##################
@@ -69,4 +80,30 @@ def slt_srvc():
 
 ##################_Function_##################
  
+def rec_tl_prc(var): # Adding total price as we move forward
+    gd_tl += var
+    pass # Nothing is returned
+ 
+##################_Function_##################
+ 
+def checkout():
+    ret_var = "" # str variable used for returning keys as an string output of selected dictionary
+    
+    print("Would you like to book more services?")
+    # input = 
+    
+    return ret_var
+ 
+ 
+##################_Function_##################
+
+def Final_Output():
+    
+    exit
+ 
+##################_Function_##################
+
+##################_Function_##################
+
+
 
