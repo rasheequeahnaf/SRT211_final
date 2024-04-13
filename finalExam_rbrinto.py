@@ -35,6 +35,8 @@
 gd_tl = 0.0 # variable to store grand total
 tl_srvc = 0 # Total Services chosen
 booking_state = True # Starts as if the booking is going on and helps end the program when booking done
+phase = 0
+
 print (  " ---------------------------------")
 print (  "|        Phynix Auto Group        |")
 print (  "|                                 |")
@@ -44,7 +46,8 @@ print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
 print (  "|      | Established 1946 |       |")
 print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
 
-l_choices = ["Primary Services", "Additional Services"]
+#___________________________________#
+l_choices = ["1) Primary Services", "2) Additional Services"]
 
 #___________________________________#
 dt_srvc = { # dt = dictionary , srvc = service
@@ -60,7 +63,7 @@ dt_ext = { # dt = dictionary , ext = extras
     "Engine Check": 340.00, "Tow Hitch installation": 1200.00, "Camping extras for Summer": 3795.00}
 
 #___________________________________#
-dt_quality = {"Basic": 0.00, "Standard": 15.00, "Premium": 30.00 } # dt = dictionary 
+dt_quality = {"Basic": 0.00, "Standard": 1.38, "Premium": 3.47 } # dt = dictionary 
 
 #___________________________________#
 dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
@@ -73,9 +76,20 @@ dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
  
 def pr_mn(): # pr = print , mn = menu
     ret_var = "\n" # str variable used for returning keys as an string output of selected dictionary
-    ret_var += "Please select from the Following"
-    choice = input("")
-    return ret_var
+    ret_var += "\n  Total items in Cart: " + str(tl_srvc)
+    ret_var += "\n  Total price: " + str(gd_tl)
+    ret_var += "\n\n  Please select from the Following\n"
+    
+    # print(ret_var)
+    
+    for i in l_choices:
+        
+        ret_var += "\n  " + i
+    
+    
+    print (ret_var)
+    
+    choice = input("\n  What are you looking for? Ans: ")
 
 ##################_Function_##################
  
@@ -87,6 +101,7 @@ def slt_srvc():
 ##################_Function_##################
  
 def rec_tl_prc(var): # Adding total price as we move forward
+    global gd_tl
     gd_tl += var
     pass # Nothing is returned
  
@@ -112,4 +127,5 @@ def Final_Output():
 ##################_Function_##################
 
 
-
+if __name__ == "__main__":
+    pr_mn()
