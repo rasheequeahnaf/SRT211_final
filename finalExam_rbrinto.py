@@ -28,7 +28,7 @@
  # tl = total
  # rec = record
  # gd = grand
- # prmtr = parameter
+ # prmtr = prmtreter
  # ql = quality
  # tmp = temporary
 
@@ -37,7 +37,7 @@
 gd_tl = 0.00 # variable to store grand total
 tl_srvc = 0 # Total Services chosen
 booking_state = True # Starts as if the booking is going on and helps end the program when booking done
-phase = 0
+phase = 1
 ql_srvc = 3.47 # quality of service
 v_sz = 1.28 # vehicle size
 
@@ -88,23 +88,30 @@ def wlc_msg():
 ##################_Function_##################
 
 def fkbv(prmtr1, prmtr2): # fetch key by value function
+    
     for k, v in prmtr1.items():
+        
         if v == prmtr2:
+            
             return k
+        
     return "" 
 
 ##################_Function_##################
  
-def gvbi(param1, param2): # get values by index function
+def gvbi(prmtr1, prmtr2): # get values by index function ( dictionary, index int )
     # This function is a helper function. it is not needed but provided for better classification of code
-    tmp_var = list(param1.values())
-    return tmp_var[param2]
+    tmp_var = list(prmtr1.values())
+    
+    return tmp_var[prmtr2]
 
 ##################_Function_##################
  
-def gkbi(param1, param2): # get key by index
-    keys_list = list(param1.keys())
-    return str(keys_list[param2])
+def gkbi(prmtr1, prmtr2): # get key by index
+    
+    keys_list = list(prmtr1.keys())
+    
+    return str(keys_list[prmtr2])
 
 ##################_Function_##################
  
@@ -117,32 +124,63 @@ def pr_mn(prmtr): # pr = print , mn = menu
     ret_var += "\n  Default vehicle size is Sedan and quality of service is Basic\n"
     
     count = 1
+    
     for key in prmtr.keys():
+        
         ret_var += "\n" + str(count) + "  " + str(key)
+        
         count += 1
     
     print (ret_var)
-    choice(prmtr)
     
 ##################_Function_##################
 
 def choice(prmtr):
+    global phase
     
-    tmp_var = 0
+    tmp_var1 = None
     
-    while int(tmp_var) <= 0 or int(tmp_var) >= len(prmtr):
+    # Validate user input
+    while not tmp_var1 or not (tmp_var1.isdigit() and 1 <= int(tmp_var1) <= len(prmtr)):
+        tmp_var1 = input("\n  What option? Ans: ")
+    
+    # Convert the validated input to an integer
+    tmp_var2 = int(tmp_var1)
+    
+    if phase == 0:
+        if tmp_var2 == 1:
+            phase = 1
+        elif tmp_var2 == 2:
+            phase = 2
+        elif tmp_var2 == 3:
+            phase = 3
+        elif tmp_var2 == 4:
+            phase = 4
+        elif tmp_var2 == 5:
+            return tmp_var2
         
-        tmp_var = input("\n  What option? Ans: ")
+        
+    # Set the phase based on the user input
     
+        
+
+def set_ql_srvc(prmtr, tmp_var):
+    
+    global phase, ql_srvc
+    
+    phase = 0
+    
+    ql_srvc = float(gvbi(prmtr, tmp_var))
+
 ##################_Function_##################
  
-def slt_srvc(param1, param2): # selected service price will be fetched and recorded
+def slt_srvc(prmtr1, prmtr2): # selected service price will be fetched and recorded
     
     global all_slt_srvc
     
-    all_slt_srvc.append(gkbi(param2, param1-1))
+    all_slt_srvc.append(gkbi(prmtr2, prmtr1-1))
     
-    tmp_var = float(gvbi(param2, param1-1))
+    tmp_var = float(gvbi(prmtr2, prmtr1-1))
     
     rec_tl_prc(tmp_var)
 
@@ -200,25 +238,16 @@ def Final_Output():
     
 ##################_Function_##################
 
-def isInt(prmtr):
-    try:
-        # Attempt to convert the string to an integer
-        int(prmtr)
-        # If successful, return True
-        return True
-    except ValueError:
-        # If a ValueError occurs, return False
-        return False
-
 ##################_Function_##################
 
 if __name__ == "__main__":
     
-    wlc_msg()
-    
     tmp_var = None
     
+    wlc_msg()
+    
     while booking_state != False:
+        
         if phase == 0:
             tmp_var = dt_choices
         elif phase == 1:
@@ -234,5 +263,11 @@ if __name__ == "__main__":
         
         if phase >= 0 or phase <= 4:
             pr_mn(tmp_var)
+        
+        choice(tmp_var)
+        
+        print (phase)
+        
+        
     
     
