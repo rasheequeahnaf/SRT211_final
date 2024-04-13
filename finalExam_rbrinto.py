@@ -174,20 +174,6 @@ def choice(prmtr):
         phase = 0
 
     return tmp_var2
-    
-##################_Function_##################
-
-# def set_v_sz():
-#     global v_sz, phase
-    
-#     # Perform the choice and set v_sz
-#     tmp_var = int(choice(dt_vhcl_sz))
-    
-#     # Update vehicle size using the selected index
-#     v_sz = float(gvbi(dt_vhcl_sz, tmp_var - 1))
-    
-#     # Reset the phase to 0
-#     phase = 0
 
 def set_v_sz():
     global v_sz, phase
@@ -208,14 +194,24 @@ def set_v_sz():
 def set_ql_srvc():
     global ql_srvc, phase
     
-    # Perform the choice and set ql_srvc
-    tmp_var = int(choice(dt_quality))
+    # Perform the choice function to get user selection
+    tmp_var = choice(dt_quality)
     
-    # Update quality of service using the selected index
-    ql_srvc = float(gvbi(dt_quality, tmp_var - 1))
+    # Validate the selection
+    if tmp_var is not None and isinstance(tmp_var, int) and 1 <= tmp_var <= len(dt_quality):
+        
+        # Update quality of service using the selected index
+        ql_srvc = float(gvbi(dt_quality, tmp_var - 1))
+        
+    else:
+        print("\n  Invalid input - Try Again")
+        # Prompt the user again if the choice is invalid
+        
+        set_ql_srvc()
     
-    # Reset the phase to 0
+    # Reset the phase to 0 in either case (whether choice was valid or invalid)
     phase = 0
+
 
 ##################_Function_##################
  
@@ -231,13 +227,13 @@ def slt_srvc(prmtr1, prmtr2): # selected service price will be fetched and recor
     
     rec_tl_prc(tmp_var2)
     
-    print(f"You have added {tmp_var} service to cart successfully!")
+    print( "|===================================================================================")
+    print(f"|=> You have added '{tmp_var}' service to your cart successfully! <=")
+    print( "|===================================================================================")
     
     tl_srvc += 1
     
     phase = 0
-    
-    # return ""
 
 ##################_Function_##################
  
@@ -246,8 +242,6 @@ def rec_tl_prc(var): # Adding total price as we move forward
     global gd_tl
     
     gd_tl += var
-    
-    # return "" # Nothing is returned
  
 ##################_Function_##################
  
@@ -302,7 +296,7 @@ def Final_Output():
     print ("\n|=================================|")
     print (ret_var)
     print ("|=================================|")
-    print (f"\n  Total Cost of {tmp_var2} quality service(s) for your {tmp_var1} will be: {tmp_var3:.2f}")
+    print (f"\n  Total Cost of {tmp_var2} quality service(s) for your {tmp_var1} will be: ${tmp_var3:.2f}")
     
 ##################_Function_##################
 
