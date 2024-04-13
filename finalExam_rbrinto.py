@@ -43,7 +43,7 @@ v_sz = 1.00 # vehicle size
 
 #temporary list to hold the services selected by customer
 #___________________________________#
-all_slt_srvc = [ "var1", "var2", "var3", "var4","var5", "var6","var7", "var8"]
+all_slt_srvc = []
 
 
 # Defining dictionaries for services, additional options, and service tiers with their prices
@@ -143,8 +143,11 @@ def choice(prmtr):
     tmp_var1 = None
     
     # Validate user input
-    while not tmp_var1 or not (tmp_var1.isdigit() and 1 <= int(tmp_var1) <= len(prmtr)):
+    while tmp_var1 is None:
         tmp_var1 = input("\n  What option? Ans: ")
+        if not tmp_var1.isdigit() or not (1 <= int(tmp_var1) <= len(prmtr)):
+            print("\n  Invalid input - Try Again")
+            tmp_var1 = None
     
     # Convert the validated input to an integer
     tmp_var2 = int(tmp_var1)
@@ -157,31 +160,45 @@ def choice(prmtr):
             phase = 2
         elif tmp_var2 == 3:
             phase = 3
-            set_ql_srvc()  # Phase 3: set quality of service
-            phase = 0  # Reset phase
+            set_ql_srvc()
+            phase = 0
         elif tmp_var2 == 4:
             phase = 4
-            set_v_sz()  # Phase 4: set vehicle size
-            # phase = 0  # Reset phase
+            set_v_sz()
+            phase = 0
         elif tmp_var2 == 5:
             phase = 5
             return tmp_var2
     elif phase in [1, 2]:
         slt_srvc(tmp_var2, prmtr)
-        phase = 0  # Reset phase
+        phase = 0
 
-    # Set the phase based on the user input
+    return tmp_var2
     
 ##################_Function_##################
+
+# def set_v_sz():
+#     global v_sz, phase
+    
+#     # Perform the choice and set v_sz
+#     tmp_var = int(choice(dt_vhcl_sz))
+    
+#     # Update vehicle size using the selected index
+#     v_sz = float(gvbi(dt_vhcl_sz, tmp_var - 1))
+    
+#     # Reset the phase to 0
+#     phase = 0
 
 def set_v_sz():
     global v_sz, phase
     
-    # Perform the choice and set v_sz
-    tmp_var = int(choice(dt_vhcl_sz))
+    tmp_var = choice(dt_vhcl_sz)
     
-    # Update vehicle size using the selected index
-    v_sz = float(gvbi(dt_vhcl_sz, tmp_var - 1))
+    # Check if the return value from choice is valid
+    if tmp_var is not None and isinstance(tmp_var, int):
+        
+        # Update vehicle size using the selected index
+        v_sz = float(gvbi(dt_vhcl_sz, tmp_var - 1))
     
     # Reset the phase to 0
     phase = 0
@@ -313,7 +330,6 @@ if __name__ == "__main__":
             checkout()
         
         if phase >= 0 or phase <= 4:
-            # pr_mn(tmp_var)
         
             choice(tmp_var)
         
