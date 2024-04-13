@@ -83,9 +83,12 @@ def pr_mn(prmtr): # pr = print , mn = menu
     
     # print(ret_var)
     
+    count = 1
+    
     for i in prmtr:
-        count = len(prmtr)
-        ret_var += "\n  " + i
+        # count = len(prmtr)
+        
+        ret_var += "\n" + str(count) + "  " + i
     
     print (ret_var)
     
@@ -127,11 +130,11 @@ def Final_Output():
 
 def choice(prmtr):
     
-    choice 
-    while choice >= len(prmtr) or choice <= len(prmtr):
+    choice = 0
+    while int(choice) <= 0 or int(choice) >= len(prmtr):
         choice = input("\n  What option? Ans: ")
-    
-    pass
+        
+pass
 
 ##################_Function_##################
 
