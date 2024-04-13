@@ -55,7 +55,7 @@ dt_choices = {"Primary Services":None, "Additional Services":None, "Quality of S
 dt_srvc = { # dt = dictionary , srvc = service
     "Oil Change": 70.00,  "Tire Rotation": 60.00,  "Brake Inspection": 40.00, 
     "Engine Tuning": 300.00, "Top-up Fluids": 20.00, "Allignment": 120.00,
-    "Winter Tire Change": 75.00, "Body damage repair": 3200.00, "Insurance Claim Service+": 300.00,
+    "Winter Tire Change": 75.00, "Body damage repair": 3200.00, "Insurance Claim++": 300.00,
     "Warranty Renewal": 335.00, "Vehicle Safety": 100.00, "General inspection": 135.00 }
 
 #___________________________________#
@@ -76,14 +76,14 @@ dt_vhcl_sz = { # dt = dictionary , vhcl = Vehicle, sz = Size
 ##################_Function_##################
 
 def wlc_msg():
-    print (  " ---------------------------------")
+    print (  "-----------------------------------")
     print (  "|        Phynix Auto Group        |")
     print (  "|                                 |")
     print (  "|  Welcome to our Booking system  |")
     print (  "|                                 |")
-    print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
+    print (  "-------~~~~~~~~~~~~~~~~~~~~--------")
     print (  "|      | Established 1946 |       |")
-    print (  " ------~~~~~~~~~~~~~~~~~~~~--------")
+    print (  "-------~~~~~~~~~~~~~~~~~~~~--------")
 
 ##################_Function_##################
 
@@ -173,6 +173,8 @@ def choice(prmtr):
     
     tmp_var1 = 0
     
+    pr_mn(prmtr)
+    
     # Validate user input
     while not tmp_var1 or not (tmp_var1.isdigit() and 1 <= int(tmp_var1) <= len(prmtr)):
         tmp_var1 = input("\n  What option? Ans: ")
@@ -253,13 +255,19 @@ def set_ql_srvc():
  
 def slt_srvc(prmtr1, prmtr2): # selected service price will be fetched and recorded
     
-    global all_slt_srvc
+    global all_slt_srvc, phase
     
-    all_slt_srvc.append(gkbi(prmtr2, prmtr1-1))
+    tmp_var = gkbi(prmtr2, prmtr1-1)
     
-    tmp_var = float(gvbi(prmtr2, prmtr1-1))
+    all_slt_srvc.append(tmp_var)
     
-    rec_tl_prc(tmp_var)
+    tmp_var2 = float(gvbi(prmtr2, prmtr1-1))
+    
+    rec_tl_prc(tmp_var2)
+    
+    print(f"You have added {tmp_var} service to cart successfully!")
+    
+    phase = 0
 
 ##################_Function_##################
  
@@ -276,11 +284,11 @@ def rec_tl_prc(var): # Adding total price as we move forward
 def checkout():
     global phase, booking_state
     
-    print(          "\n  __________________________________________________")
+    print(        "\n|---------------------------------------------------->|")
     
-    tmp_var = input("\n  Would you like to book more services? Ans [Y/N]: ")
+    tmp_var = input("| Would you like to book more services? Ans [Y/N]: ")
     
-    print(          "\n  --------------------------------------------------")
+    print(          "|---------------------------------------------------->|")
     
     if tmp_var == "Y" or tmp_var == "y":
         
@@ -293,7 +301,10 @@ def checkout():
         booking_state = False
         
         Final_Output()
-        print(      "\n  -------------------------------------------------------------------------")
+        print(      "  ___________________________________________________________________________")
+        
+        print(v_sz)
+        print(ql_srvc)
         exit()
     
     return ""
@@ -323,7 +334,7 @@ def Final_Output():
     print ("\n|=================================|")
     print (ret_var)
     print ("|=================================|")
-    print (f"\n  Total Cost of '{tmp_var2}' quality service(s) for your '{tmp_var1}' will be: '{tmp_var3:.2f}'")
+    print (f"\n  Total Cost of {tmp_var2} quality service(s) for your {tmp_var1} will be: {tmp_var3:.2f}")
     
 ##################_Function_##################
 
@@ -351,9 +362,9 @@ if __name__ == "__main__":
             checkout()
         
         if phase >= 0 or phase <= 4:
-            pr_mn(tmp_var)
+            # pr_mn(tmp_var)
         
-        choice(tmp_var)
+            choice(tmp_var)
         
         
         
